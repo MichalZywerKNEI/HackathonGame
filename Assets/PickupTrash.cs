@@ -1,33 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PickupTrash : MonoBehaviour
 {
-    //public Transform Player; //uzywajcie transform zamiast Player
-    public float pickupRange = 2f;
+    public float pickupRange = 1f;
     public Transform trashBin;
     public int pointsPerPickup = 10;
+    public Text score;
+    private int currentScore = 0;
+    private bool inventoryFull = false;
 
     private void Update()
     {
-        // Sprawdzanie, czy gracz nacisnął klawisz spacji
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            // Znajdź najbliższe dostępne śmieci
             GameObject closestPickup = FindClosestPickup();
 
-            // Jeśli znaleziono dostępne śmieci w zasięgu
-            if (closestPickup != null)
+            if (closestPickup != null && !inventoryFull)
             {
-                // Podnieś śmieci
                 Pickup(closestPickup);
-
-                // Jeśli gracz jest wystarczająco blisko śmietnika, wrzuć śmieci
-                if (IsCloseToTrashBin())
-                {
-                    Dispose();
-                }
+            }
+            if (IsCloseToTrashBin() && inventoryFull)
+            {
+                Dispose();
             }
         }
     }
@@ -53,7 +50,8 @@ public class PickupTrash : MonoBehaviour
 
     void Pickup(GameObject pickup)
     {
-        pickup.SetActive(false); // Schowaj śmieci
+        pickup.SetActive(false);
+        inventoryFull = true;
     }
 
     bool IsCloseToTrashBin()
@@ -64,6 +62,8 @@ public class PickupTrash : MonoBehaviour
 
     void Dispose()
     {
-        // Tu możesz dodać kod, który przyznaje punkty
+        currentScore += pointsPerPickup;
+        score.text = $"Score: {currentScore.ToString()}";
+        inventoryFull = false;
     }
 }
