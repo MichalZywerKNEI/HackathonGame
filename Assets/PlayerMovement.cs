@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         transform.position = Vector3.MoveTowards(transform.position, MoveTarget.position, MoveSpeed * Time.deltaTime);
 
@@ -21,11 +21,11 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
             {
-                MoveTarget.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
+                MoveTarget.position += new Vector3(Input.GetAxisRaw("Horizontal")/2, 0f, 0f);
             }
             if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
             {
-                MoveTarget.position += new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
+                MoveTarget.position += new Vector3(0f, Input.GetAxisRaw("Vertical")/2, 0f);
             }
         }
     }
