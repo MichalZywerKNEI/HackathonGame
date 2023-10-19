@@ -6,13 +6,11 @@ public class PlayerMovement : MonoBehaviour
 {
     public float MoveSpeed;
     public Transform MoveTarget;
-    // Start is called before the first frame update
     void Start()
     {
         MoveTarget.parent = null;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         transform.position = Vector3.MoveTowards(transform.position, MoveTarget.position, MoveSpeed * Time.deltaTime);
